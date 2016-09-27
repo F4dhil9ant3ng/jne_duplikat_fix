@@ -48,19 +48,22 @@ class Expedisi extends CI_Controller
 
     public function create()
     {
+
         $data = array(
             'button' => 'Create',
             'action' => site_url('expedisi/create_action'),
-	    'id_expedisi' => set_value('id_expedisi'),
-	    'id_exp' => set_value('id_exp'),
-	    'id_mobil' => set_value('id_mobil'),
-	    'tgl_berangkat' => set_value('tgl_berangkat'),
-	);
-  $dataMobilExp = $this->App_model->get_query("SELECT * FROM view_exp")->result();
-  $data['dataMobilExp'] = $dataMobilExp;
-  $data['site_title'] = 'Marco';
-  $data['title_page'] = 'Olah Data expedisi';
-  $data['assign_js'] = 'expedisi/js/index.js';
+      	    'id_expedisi' => set_value('id_expedisi'),
+      	    'id_exp' => set_value('id_exp'),
+      	    'id_mobil' => set_value('id_mobil'),
+      	    'tgl_berangkat' => set_value('tgl_berangkat'),
+      	);
+        $dataMobilExp = $this->App_model->get_query("SELECT * FROM view_exp")->result();
+        $mobil = $this->App_model->get_query("SELECT * FROM tb_mobil")->result();
+        $data['dataMobilExp'] = $dataMobilExp;
+        $data['dataMobil'] = $mobil;
+        $data['site_title'] = 'Marco';
+        $data['title_page'] = 'Olah Data expedisi';
+        $data['assign_js'] = 'expedisi/js/index.js';
         load_view('expedisi/tb_expedisi_form', $data);
     }
 
@@ -91,14 +94,18 @@ class Expedisi extends CI_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('expedisi/update_action'),
-		'id_expedisi' => set_value('id_expedisi', $row->id_expedisi),
-		'id_exp' => set_value('id_exp', $row->id_exp),
-		'id_mobil' => set_value('id_mobil', $row->id_mobil),
-		'tgl_berangkat' => set_value('tgl_berangkat', $row->tgl_berangkat),
-	    );
-      $data['site_title'] = 'Marco';
-      $data['title_page'] = 'Olah Data expedisi';
-      $data['assign_js'] = 'expedisi/js/index.js';
+            		'id_expedisi' => set_value('id_expedisi', $row->id_expedisi),
+            		'id_exp' => set_value('id_exp', $row->id_exp),
+            		'id_mobil' => set_value('id_mobil', $row->id_mobil),
+            		'tgl_berangkat' => set_value('tgl_berangkat', $row->tgl_berangkat),
+      	    );
+            $dataMobilExp = $this->App_model->get_query("SELECT * FROM view_exp")->result();
+            $mobil = $this->App_model->get_query("SELECT * FROM tb_mobil")->result();
+            $data['dataMobilExp'] = $dataMobilExp;
+            $data['dataMobil'] = $mobil;
+            $data['site_title'] = 'Marco';
+            $data['title_page'] = 'Olah Data expedisi';
+            $data['assign_js'] = 'expedisi/js/index.js';
             load_view('expedisi/tb_expedisi_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');

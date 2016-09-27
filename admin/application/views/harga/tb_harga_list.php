@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="page-header" style="margin-top: 60px;">
-    <div class="row" style="margin-top: 8px">
+    <div class="row" style="margin-top: 10px">
       <div class="col-md-4">
           <h3><?php echo $title_page ?></h3>
       </div>
@@ -10,9 +10,9 @@
           </div>
       </div>
       <div class="col-md-4 text-right">
-          <?php echo anchor(site_url('harga/create'), 'Create', 'class="btn btn-primary"'); ?>
+        <?php echo anchor(site_url('harga/create'), 'Create', 'class="btn btn-primary"'); ?>
         <?php echo anchor(site_url('harga/excel'), 'Excel', 'class="btn btn-primary"'); ?>
-        </div>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -21,7 +21,8 @@
           <thead>
               <tr>
                   <th width="80px">No</th>
-      <th>Id Tujuan</th>
+      <th>Asal</th>
+      <th>Tujuan</th>
       <th>Harga</th>
       <th>Paket</th>
       <th>Estimasi</th>
@@ -36,7 +37,8 @@
               ?>
               <tr>
       <td><?php echo ++$start ?></td>
-      <td><?php echo $harga->id_tujuan ?></td>
+      <td><?php echo $harga->kota_asal ?></td>
+      <td><?php echo $harga->kota_tujuan ?></td>
       <td><?php echo $harga->harga ?></td>
       <td><?php echo $harga->paket ?></td>
       <td><?php echo $harga->estimasi ?></td>

@@ -55,14 +55,14 @@ class Auth extends CI_Controller {
 							redirect('Beranda');
 						}
 						else if ($this->level == 'C') {
-							redirect('Beranda_cabang');
+							redirect('Beranda');
 						}
 						else {
 							redirect('auth');
 						}
 				}
 				else {
-					echo "Not Macth";
+					redirect('auth');
 				}
 			}
 		}

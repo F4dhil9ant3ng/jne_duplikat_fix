@@ -37,16 +37,17 @@ else if (isset($_GET['action']) && $_GET['action'] == 'prosesHarga') {
 	$berat = mysql_escape_string($_POST['berat']);
 	$paket = mysql_escape_string($_POST['jenis']);
 
-	$query = "SELECT * FROM view_harga where kota='$tujuan'";
+	$query = "SELECT * FROM view_harga where kota_tujuan='$tujuan' and kota_asal='$sekarang'";
 	$data = $_POST;
 	$datax = array();
 	$datax_r = array();
 	$sql = mysql_query($query) or die($query);
 	while ($row = mysql_fetch_row($sql)) {
-		$datax['tujuan'] = $row[0];
-		$datax['harga'] = $row[1];
-		$datax['paket'] = $row[2];
-		$datax['estimasi'] = $row[3];
+		$datax['tujuan'] = $row[4];
+		$datax['asal'] = $row[2];
+		$datax['harga'] = $row[5];
+		$datax['paket'] = $row[6];
+		$datax['estimasi'] = $row[7];
 		array_push($datax_r, $datax);
 	}
 	$data = $datax_r;

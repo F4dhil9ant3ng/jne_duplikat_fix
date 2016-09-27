@@ -9,18 +9,19 @@ class Harga extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Harga_model');
+        $this->load->model('App_model');
         $this->load->library('form_validation');
     }
 
     public function index()
     {
-        $harga = $this->Harga_model->get_all();
+        $harga = $this->App_model->get_query("SELECT * FROM view_harga")->result();
 
         $data = array(
             'harga_data' => $harga
         );
         $data['site_title'] = 'Marco';
-        $data['title_page'] = 'Olah Data Harga Expedisi';
+        $data['title_page'] = 'Olah Data Harga';
         $data['assign_js'] = 'harga/js/index.js';
         load_view('harga/tb_harga_list', $data);
     }
@@ -31,13 +32,14 @@ class Harga extends CI_Controller
         if ($row) {
             $data = array(
 		'id_harga' => $row->id_harga,
+		'id_asal' => $row->id_asal,
 		'id_tujuan' => $row->id_tujuan,
 		'harga' => $row->harga,
 		'paket' => $row->paket,
 		'estimasi' => $row->estimasi,
 	    );
       $data['site_title'] = 'Marco';
-      $data['title_page'] = 'Olah Data Harga Expedisi';
+      $data['title_page'] = 'Olah Data Harga';
       $data['assign_js'] = 'harga/js/index.js';
             load_view('harga/tb_harga_read', $data);
         } else {
@@ -48,18 +50,22 @@ class Harga extends CI_Controller
 
     public function create()
     {
+      $cab = $this->App_model->get_query("SELECT * FROM tb_cab")->result();
         $data = array(
             'button' => 'Create',
             'action' => site_url('harga/create_action'),
-	    'id_harga' => set_value('id_harga'),
-	    'id_tujuan' => set_value('id_tujuan'),
-	    'harga' => set_value('harga'),
-	    'paket' => set_value('paket'),
-	    'estimasi' => set_value('estimasi'),
-	);
-  $data['site_title'] = 'Marco';
-  $data['title_page'] = 'Olah Data Harga Expedisi';
-  $data['assign_js'] = 'harga/js/index.js';
+      	    'id_harga' => set_value('id_harga'),
+      	    'id_asal' => set_value('id_asal'),
+      	    'id_tujuan' => set_value('id_tujuan'),
+      	    'harga' => set_value('harga'),
+      	    'paket' => set_value('paket'),
+      	    'estimasi' => set_value('estimasi'),
+      	);
+        $cab = $this->App_model->get_query("SELECT * FROM tb_cab")->result();
+        $data['cabang'] = $cab;
+        $data['site_title'] = 'Marco';
+        $data['title_page'] = 'Olah Data Harga';
+        $data['assign_js'] = 'harga/js/index.js';
         load_view('harga/tb_harga_form', $data);
     }
 
@@ -71,6 +77,7 @@ class Harga extends CI_Controller
             $this->create();
         } else {
             $data = array(
+		'id_asal' => $this->input->post('id_asal',TRUE),
 		'id_tujuan' => $this->input->post('id_tujuan',TRUE),
 		'harga' => $this->input->post('harga',TRUE),
 		'paket' => $this->input->post('paket',TRUE),
@@ -91,15 +98,18 @@ class Harga extends CI_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('harga/update_action'),
-		'id_harga' => set_value('id_harga', $row->id_harga),
-		'id_tujuan' => set_value('id_tujuan', $row->id_tujuan),
-		'harga' => set_value('harga', $row->harga),
-		'paket' => set_value('paket', $row->paket),
-		'estimasi' => set_value('estimasi', $row->estimasi),
-	    );
-      $data['site_title'] = 'Marco';
-      $data['title_page'] = 'Olah Data Harga Expedisi';
-      $data['assign_js'] = 'harga/js/index.js';
+        		'id_harga' => set_value('id_harga', $row->id_harga),
+        		'id_asal' => set_value('id_asal', $row->id_asal),
+        		'id_tujuan' => set_value('id_tujuan', $row->id_tujuan),
+        		'harga' => set_value('harga', $row->harga),
+        		'paket' => set_value('paket', $row->paket),
+        		'estimasi' => set_value('estimasi', $row->estimasi),
+      	    );
+            $cab = $this->App_model->get_query("SELECT * FROM tb_cab")->result();
+            $data['cabang'] = $cab;
+            $data['site_title'] = 'Marco';
+            $data['title_page'] = 'Olah Data Harga';
+            $data['assign_js'] = 'harga/js/index.js';
             load_view('harga/tb_harga_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -115,6 +125,7 @@ class Harga extends CI_Controller
             $this->update($this->input->post('id_harga', TRUE));
         } else {
             $data = array(
+		'id_asal' => $this->input->post('id_asal',TRUE),
 		'id_tujuan' => $this->input->post('id_tujuan',TRUE),
 		'harga' => $this->input->post('harga',TRUE),
 		'paket' => $this->input->post('paket',TRUE),
@@ -143,6 +154,7 @@ class Harga extends CI_Controller
 
     public function _rules()
     {
+	$this->form_validation->set_rules('id_asal', 'id asal', 'trim|required');
 	$this->form_validation->set_rules('id_tujuan', 'id tujuan', 'trim|required');
 	$this->form_validation->set_rules('harga', 'harga', 'trim|required');
 	$this->form_validation->set_rules('paket', 'paket', 'trim|required');
@@ -174,6 +186,7 @@ class Harga extends CI_Controller
 
         $kolomhead = 0;
         xlsWriteLabel($tablehead, $kolomhead++, "No");
+	xlsWriteLabel($tablehead, $kolomhead++, "Id Asal");
 	xlsWriteLabel($tablehead, $kolomhead++, "Id Tujuan");
 	xlsWriteLabel($tablehead, $kolomhead++, "Harga");
 	xlsWriteLabel($tablehead, $kolomhead++, "Paket");
@@ -184,6 +197,7 @@ class Harga extends CI_Controller
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
+	    xlsWriteNumber($tablebody, $kolombody++, $data->id_asal);
 	    xlsWriteNumber($tablebody, $kolombody++, $data->id_tujuan);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->harga);
 	    xlsWriteLabel($tablebody, $kolombody++, $data->paket);
@@ -202,5 +216,5 @@ class Harga extends CI_Controller
 /* End of file Harga.php */
 /* Location: ./application/controllers/Harga.php */
 /* Please DO NOT modify this information : */
-/* Generated by Harviacode Codeigniter CRUD Generator 2016-09-13 15:25:45 */
+/* Generated by Harviacode Codeigniter CRUD Generator 2016-09-27 13:13:10 */
 /* http://harviacode.com */

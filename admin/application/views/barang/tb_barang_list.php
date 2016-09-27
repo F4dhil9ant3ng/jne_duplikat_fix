@@ -25,14 +25,10 @@
       <th>Id Expedisi</th>
       <th>Nama Barang</th>
       <th>Pengirim</th>
+      <th>Asal</th>
       <th>Tujuan</th>
       <th>Penerima</th>
       <th>Alamat Penerima</th>
-      <th>Jenis</th>
-      <th>Berat</th>
-      <th>Colly</th>
-      <th>Tgl Kirim</th>
-      <th>Deskripsi</th>
       <th>Harga</th>
       <th>Action</th>
               </tr>
@@ -49,14 +45,10 @@
       <td><?php echo $barang->id_expedisi ?></td>
       <td><?php echo $barang->nama_barang ?></td>
       <td><?php echo $barang->pengirim ?></td>
+      <td><?php echo $barang->asal ?></td>
       <td><?php echo $barang->tujuan ?></td>
       <td><?php echo $barang->penerima ?></td>
       <td><?php echo $barang->alamat_penerima ?></td>
-      <td><?php echo $barang->jenis ?></td>
-      <td><?php echo $barang->Berat ?></td>
-      <td><?php echo $barang->colly ?></td>
-      <td><?php echo $barang->tgl_kirim ?></td>
-      <td><?php echo $barang->deskripsi ?></td>
       <td><?php echo $barang->harga ?></td>
       <td style="text-align:center" width="200px">
     <?php

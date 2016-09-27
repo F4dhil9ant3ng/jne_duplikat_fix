@@ -11,11 +11,23 @@
       <form action="<?php echo $action; ?>" method="post">
     <div class="form-group">
           <label for="int">Asal <?php echo form_error('asal') ?></label>
-          <input type="text" class="form-control" name="asal" id="asal" placeholder="Asal" value="<?php echo $asal; ?>" />
+          <!-- <input type="text" class="form-control" name="asal" id="asal" placeholder="Asal" value="<?php echo $asal; ?>" /> -->
+          <select class="form-control" name="asal" id="asal" >
+            <option value="">---- SELECT ONE DATA ----</option>
+            <?php foreach ($cabang as $key ): ?>
+              <option value="<?php echo $key->id_cabang ?>"><?php echo $key->id_cabang." | ".$key->kota ?></option>
+            <?php endforeach; ?>
+          </select>
       </div>
     <div class="form-group">
           <label for="int">Tujuan <?php echo form_error('tujuan') ?></label>
-          <input type="text" class="form-control" name="tujuan" id="tujuan" placeholder="Tujuan" value="<?php echo $tujuan; ?>" />
+          <!-- <input type="text" class="form-control" name="tujuan" id="tujuan" placeholder="Tujuan" value="<?php echo $tujuan; ?>" /> -->
+          <select class="form-control" name="tujuan" id="tujuan" >
+            <option value="">---- SELECT ONE DATA ----</option>
+            <?php foreach ($cabang as $key ): ?>
+              <option value="<?php echo $key->id_cabang ?>"><?php echo $key->id_cabang." | ".$key->kota ?></option>
+            <?php endforeach; ?>
+          </select>
       </div>
     <div class="form-group">
           <label for="varchar">Kode Expedisi <?php echo form_error('kode_expedisi') ?></label>

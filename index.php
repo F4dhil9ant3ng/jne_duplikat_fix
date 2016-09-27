@@ -35,12 +35,27 @@
 <body>
   <div class="container">
     <nav class="navbar navbar-default" role="navigation">
-    	<div class="navbar-header">
-    		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-    			 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-    		</button> <a class="navbar-brand" href="#">CV. MULYA GEMILANG PALU</a>
-    	</div>
-    </nav>
+				<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button> <a class="navbar-brand" href="index.php">CV. Mulya Gemilang Palu</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="admin/">Admin Login</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+			</nav>
     <div class="row">
       <div class="col-md-12">
         <div class="carousel slide" id="carousel-459015">
@@ -138,8 +153,7 @@
           <h1 class="text-primary style1">Cek Tarif</h1>
           <form class="form-horizontal" role="form" id="cekTarif" method="post" action="act.tarif.php?action=prosesHarga">
             <div class="form-group">
-              <label for="" class="col-sm-2 control-label">
-                KOTA SEKARANG              </label>
+              <label for="" class="col-sm-2 control-label">KOTA SEKARANG</label>
               <div class="col-sm-10">
                 <input type="" class="form-control" id="inSekarang" name="inSekarang" />
               </div>

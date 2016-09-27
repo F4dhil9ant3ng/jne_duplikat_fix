@@ -15,7 +15,7 @@ class Barang extends CI_Controller
 
     public function index()
     {
-        $barang = $this->Barang_model->get_all();
+        $barang = $this->App_model->get_query("SELECT * FROM view_barang")->result();
 
         $data = array(
             'barang_data' => $barang
@@ -31,24 +31,25 @@ class Barang extends CI_Controller
         $row = $this->Barang_model->get_by_id($id);
         if ($row) {
             $data = array(
-		'id_barang' => $row->id_barang,
-		'awb' => $row->awb,
-		'id_expedisi' => $row->id_expedisi,
-		'nama_barang' => $row->nama_barang,
-		'pengirim' => $row->pengirim,
-		'tujuan' => $row->tujuan,
-		'penerima' => $row->penerima,
-		'alamat_penerima' => $row->alamat_penerima,
-		'jenis' => $row->jenis,
-		'Berat' => $row->Berat,
-		'colly' => $row->colly,
-		'tgl_kirim' => $row->tgl_kirim,
-		'deskripsi' => $row->deskripsi,
-		'harga' => $row->harga,
-	    );
-      $data['site_title'] = 'Marco';
-      $data['title_page'] = 'Olah Data Barang';
-      $data['assign_js'] = 'barang/js/index.js';
+      		'id_barang' => $row->id_barang,
+      		'awb' => $row->awb,
+      		'id_expedisi' => $row->id_expedisi,
+      		'nama_barang' => $row->nama_barang,
+      		'pengirim' => $row->pengirim,
+          'tujuan' => $row->tujuan,
+      		'asal' => $row->asal,
+      		'penerima' => $row->penerima,
+      		'alamat_penerima' => $row->alamat_penerima,
+      		'jenis' => $row->jenis,
+      		'Berat' => $row->Berat,
+      		'colly' => $row->colly,
+      		'tgl_kirim' => $row->tgl_kirim,
+      		'deskripsi' => $row->deskripsi,
+      		'harga' => $row->harga,
+      	    );
+            $data['site_title'] = 'Marco';
+            $data['title_page'] = 'Olah Data Barang';
+            $data['assign_js'] = 'barang/js/index.js';
             load_view('barang/tb_barang_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -66,7 +67,8 @@ class Barang extends CI_Controller
 	    'id_expedisi' => set_value('id_expedisi'),
 	    'nama_barang' => set_value('nama_barang'),
 	    'pengirim' => set_value('pengirim'),
-	    'tujuan' => set_value('tujuan'),
+      'tujuan' => set_value('tujuan'),
+	    'asal' => set_value('asal'),
 	    'penerima' => set_value('penerima'),
 	    'alamat_penerima' => set_value('alamat_penerima'),
 	    'jenis' => set_value('jenis'),
@@ -100,7 +102,8 @@ class Barang extends CI_Controller
 		'id_expedisi' => $this->input->post('id_expedisi',TRUE),
 		'nama_barang' => $this->input->post('nama_barang',TRUE),
 		'pengirim' => $this->input->post('pengirim',TRUE),
-		'tujuan' => $this->input->post('tujuan',TRUE),
+    'tujuan' => $this->input->post('tujuan',TRUE),
+		'asal' => $this->input->post('asal',TRUE),
 		'penerima' => $this->input->post('penerima',TRUE),
 		'alamat_penerima' => $this->input->post('alamat_penerima',TRUE),
 		'jenis' => $this->input->post('jenis',TRUE),
@@ -130,7 +133,8 @@ class Barang extends CI_Controller
 		'id_expedisi' => set_value('id_expedisi', $row->id_expedisi),
 		'nama_barang' => set_value('nama_barang', $row->nama_barang),
 		'pengirim' => set_value('pengirim', $row->pengirim),
-		'tujuan' => set_value('tujuan', $row->tujuan),
+    'tujuan' => set_value('tujuan', $row->tujuan),
+		'asal' => set_value('asal', $row->asal),
 		'penerima' => set_value('penerima', $row->penerima),
 		'alamat_penerima' => set_value('alamat_penerima', $row->alamat_penerima),
 		'jenis' => set_value('jenis', $row->jenis),
@@ -140,6 +144,11 @@ class Barang extends CI_Controller
 		'deskripsi' => set_value('deskripsi', $row->deskripsi),
 		'harga' => set_value('harga', $row->harga),
 	    );
+      $dataCab = $this->App_model->get_query("SELECT * FROM tb_cab")->result();
+      $data['data_cabang'] = $dataCab;
+
+      $dataMobilExp = $this->App_model->get_query("SELECT * FROM tb_expedisi")->result();
+      $data['dataMobilExp'] = $dataMobilExp;
       $data['site_title'] = 'Marco';
       $data['title_page'] = 'Olah Data Barang';
       $data['assign_js'] = 'barang/js/index.js';
@@ -162,7 +171,8 @@ class Barang extends CI_Controller
 		'id_expedisi' => $this->input->post('id_expedisi',TRUE),
 		'nama_barang' => $this->input->post('nama_barang',TRUE),
 		'pengirim' => $this->input->post('pengirim',TRUE),
-		'tujuan' => $this->input->post('tujuan',TRUE),
+    'tujuan' => $this->input->post('tujuan',TRUE),
+		'asal' => $this->input->post('asal',TRUE),
 		'penerima' => $this->input->post('penerima',TRUE),
 		'alamat_penerima' => $this->input->post('alamat_penerima',TRUE),
 		'jenis' => $this->input->post('jenis',TRUE),
@@ -199,7 +209,8 @@ class Barang extends CI_Controller
 	$this->form_validation->set_rules('id_expedisi', 'id expedisi', 'trim|required');
 	$this->form_validation->set_rules('nama_barang', 'nama barang', 'trim|required');
 	$this->form_validation->set_rules('pengirim', 'pengirim', 'trim|required');
-	$this->form_validation->set_rules('tujuan', 'tujuan', 'trim|required');
+  $this->form_validation->set_rules('tujuan', 'tujuan', 'trim|required');
+	$this->form_validation->set_rules('asal', 'asal', 'trim|required');
 	$this->form_validation->set_rules('penerima', 'penerima', 'trim|required');
 	$this->form_validation->set_rules('alamat_penerima', 'alamat penerima', 'trim|required');
 	$this->form_validation->set_rules('jenis', 'jenis', 'trim|required');
@@ -278,9 +289,27 @@ class Barang extends CI_Controller
 
     public function cetak_nota($id_barang)
     {
-      $row = $this->Barang_model->get_by_id($id_barang);
-      foreach ($row as $key ) {
-        echo $key."<br>";
-      }
+      $this->load->library('fpdf_gen');
+      $row = $this->App_model->get_query("SELECT * FROM view_barang WHERE id_barang='".$id_barang."'")->row();
+      $data['site_title'] = 'Marco';
+      $data['data'] = $row;
+      $data['title_page'] = 'Nota Barang';
+      $data['assign_js'] = 'barang/js/index.js';
+      $data['assign_css'] = 'barang/css/app.css';
+      load_pdf('barang/nota_barang', $data);
+
+      $html = $this->output->get_output();
+  		$this->dompdf->set_paper(array(0,0,684.00,297.00), 'potrait');
+  		$this->dompdf->load_html($html);
+  		$this->dompdf->render();
+  		$this->dompdf->stream("".$row->awb."-".date('D-M-Y').".pdf",array('Attachment'=>0));
+    }
+
+    public function getHarga($a,$b,$br,$p)
+    {
+      $harga = $this->App_model->get_query("SELECT * FROM view_harga WHERE (id_kota_asal='".$a."' AND id_kota_tujuan='".$b."') AND paket='".$p."'")->row();
+      $total = $harga->harga * $br;
+      echo $total;
+      //echo json_encode($harga);
     }
 }

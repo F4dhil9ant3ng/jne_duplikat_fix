@@ -1,5 +1,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            startDate: '-3d'
+        });
         $("#mytable").dataTable();
         $('#program_studi').select2({
           placeholder: "Masukan Kata Kunci Prodi KODE | Nama | Ketua",

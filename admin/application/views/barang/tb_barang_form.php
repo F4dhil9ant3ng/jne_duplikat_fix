@@ -13,12 +13,12 @@
               <label for="int">Awb <?php echo form_error('awb') ?></label>
               <input type="text" class="form-control" name="awb" id="awb" placeholder="Awb" value="<?php echo $awb; ?>" />
           </div>
+
         <div class="form-group">
               <label for="int">Mobil Ekspedisi <?php echo form_error('id_expedisi') ?></label>
               <select class="form-control" name="id_expedisi" id="id_expedisi">
-                <option>--- Pilih Tujuan ---</option>
                 <?php foreach ($dataMobilExp as $key): ?>
-                  <option value="<?php echo $key->id_expedisi ?>"><?php echo $key->id_mobil ?> | Kode EXP : <?php echo $key->id_exp ?></option>
+                  <option value="<?php echo $key->id_expedisi ?>"><?php echo $key->id_expedisi ?> | <?php echo $key->id_mobil ?> | Kode EXP : <?php echo $key->id_exp ?></option>
                 <?php endforeach; ?>
               </select>
           </div>
@@ -30,12 +30,21 @@
               <label for="varchar">Pengirim <?php echo form_error('pengirim') ?></label>
               <input type="text" class="form-control" name="pengirim" id="pengirim" placeholder="Pengirim" value="<?php echo $pengirim; ?>" />
           </div>
+          <div class="form-group">
+                <label for="int">Asal <?php echo form_error('asal') ?></label>
+                <select class="form-control" name="asal" id="asal">
+                  <option value="">--- Pilih Kota Asal ---</option>
+                  <?php foreach ($data_cabang as $key): ?>
+                    <option value="<?php echo $key->id_cabang ?>"><?php echo $key->kota." | ".$key->id_cabang ?></option>
+                  <?php endforeach; ?>
+                </select>
+            </div>
         <div class="form-group">
               <label for="int">Tujuan <?php echo form_error('tujuan') ?></label>
               <select class="form-control" name="tujuan" id="tujuan">
-                <option>--- Pilih Tujuan ---</option>
+                <option value="">--- Pilih Kota Tujuan ---</option>
                 <?php foreach ($data_cabang as $key): ?>
-                  <option value="<?php echo $key->id_cabang ?>"><?php echo $key->kota ?></option>
+                  <option value="<?php echo $key->id_cabang ?>"><?php echo $key->kota." | ".$key->id_cabang ?></option>
                 <?php endforeach; ?>
               </select>
           </div>
@@ -50,8 +59,9 @@
         <div class="form-group">
               <label for="enum">Jenis <?php echo form_error('jenis') ?></label>
               <select class="form-control" name="jenis" id="jenis">
-                <option value="Doc">Dokumen</option>
-                <option value="Paket">Paket</option>
+                <option value="dokumen">Dokumen</option>
+                <option value="paket">Paket</option>
+                <option value="colly">Colly</option>
               </select>
           </div>
         <div class="form-group">
@@ -64,15 +74,19 @@
           </div>
         <div class="form-group">
               <label for="datetime">Tgl Kirim <?php echo form_error('tgl_kirim') ?></label>
-              <input type="text" class="form-control" name="tgl_kirim" id="tgl_kirim" placeholder="Tgl Kirim" value="<?php echo $tgl_kirim; ?>" />
+              <input type="text" class="form-control datepicker" name="tgl_kirim" id="tgl_kirim" placeholder="Tgl Kirim" value="<?php echo $tgl_kirim; ?>" />
           </div>
         <div class="form-group">
               <label for="deskripsi">Deskripsi <?php echo form_error('deskripsi') ?></label>
               <textarea class="form-control" rows="3" name="deskripsi" id="deskripsi" placeholder="Deskripsi"><?php echo $deskripsi; ?></textarea>
           </div>
-        <div class="form-group">
+         <div class="form-group">
               <label for="varchar">Harga <?php echo form_error('harga') ?></label>
-              <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga" value="<?php echo $harga; ?>" />
+              <!-- <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga" value="<?php echo $harga; ?>" /> -->
+          </div>
+          <div class="form-group input-group">
+            <input type="text" class="form-control" name="harga" id="harga" value="<?php echo $harga; ?>" />
+            <span class="input-group-btn"><button class="btn btn-default" type="button" id="btnCekHarga"><i class="fa fa-search"></i></button></span>
           </div>
         <input type="hidden" name="id_barang" value="<?php echo $id_barang; ?>" />
         <button type="submit" class="btn btn-primary"><?php echo $button ?></button>
